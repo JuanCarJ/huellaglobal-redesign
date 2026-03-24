@@ -58,18 +58,18 @@
                   Catálogo de productos
                 </p>
                 <div class="grid grid-cols-2 gap-2">
-                  <a
+                  <NuxtLink
                     v-for="product in products"
-                    :key="product.name"
-                    href="#productos"
+                    :key="product.slug"
+                    :to="`/productos/${product.slug}`"
                     role="menuitem"
                     class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 group"
                     :class="scrolled ? 'text-navy-light hover:bg-ice' : 'text-ice hover:bg-white/10'"
-                    @click.prevent="navigateToProduct(product.name)"
+                    @click="closeMegaMenu"
                   >
                     <span class="text-cyan text-lg leading-none">{{ product.icon }}</span>
                     <span class="text-sm font-medium leading-tight">{{ product.name }}</span>
-                  </a>
+                  </NuxtLink>
                 </div>
               </div>
             </Transition>
@@ -195,14 +195,14 @@ const productsMenuRef = ref<HTMLElement | null>(null)
 const currentLang = ref('ES')
 
 const products = [
-  { name: 'Autoadhesivos / In-mold', icon: '◈' },
-  { name: 'Laminación BOPP / PET', icon: '◉' },
-  { name: 'Termoencogibles', icon: '◎' },
-  { name: 'Wrap Around – Empaque Flexible', icon: '◇' },
-  { name: 'Polyboard – Papeles y Cartones', icon: '▣' },
-  { name: 'Cintas de Transferencia Térmica', icon: '◈' },
-  { name: 'Maquinaria', icon: '⚙' },
-  { name: 'Accesorios', icon: '◐' },
+  { slug: 'autoadhesivos-in-mold', name: 'Autoadhesivos / In-mold', icon: '◈' },
+  { slug: 'laminacion-bopp-pet', name: 'Laminación BOPP / PET', icon: '◉' },
+  { slug: 'termoencogibles', name: 'Termoencogibles', icon: '◎' },
+  { slug: 'wrap-around-empaque-flexible', name: 'Wrap Around – Empaque Flexible', icon: '◇' },
+  { slug: 'polyboard-papeles-y-cartones', name: 'Polyboard – Papeles y Cartones', icon: '▣' },
+  { slug: 'cintas-de-transferencia-termica', name: 'Cintas de Transferencia Térmica', icon: '◈' },
+  { slug: 'maquinaria', name: 'Maquinaria', icon: '⚙' },
+  { slug: 'accesorios', name: 'Accesorios', icon: '◐' },
 ]
 
 const mobileLinks = [
@@ -243,12 +243,6 @@ function scrollTo(id: string) {
   if (el) {
     el.scrollIntoView({ behavior: 'smooth' })
   }
-}
-
-function navigateToProduct(name: string) {
-  megaMenuOpen.value = false
-  const el = document.getElementById('productos')
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
 }
 
 function mobileNavigate(id: string) {

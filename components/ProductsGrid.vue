@@ -18,17 +18,14 @@
 
       <!-- Products grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        <div
+        <NuxtLink
           v-for="(product, i) in products"
-          :key="product.name"
+          :key="product.slug"
+          :to="`/productos/${product.slug}`"
           ref="cardEls"
           class="product-card group"
-          @click="inquireProduct(product.name)"
           :style="{ '--card-index': i }"
-          role="button"
-          :aria-label="`Consultar sobre ${product.name}`"
-          tabindex="0"
-          @keydown.enter="inquireProduct(product.name)"
+          :aria-label="`Ver detalles de ${product.name}`"
         >
           <!-- Image -->
           <div class="relative overflow-hidden h-52 bg-navy-light">
@@ -39,7 +36,6 @@
               height="208"
               loading="lazy"
               class="product-img w-full h-full object-cover transition-transform duration-500"
-             
             />
             <!-- Gradient overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-navy-mid/80 via-transparent to-transparent"></div>
@@ -53,13 +49,13 @@
 
             <!-- CTA link -->
             <div class="flex items-center gap-1 mt-3 text-xs font-medium text-cyan/70 group-hover:text-cyan transition-colors duration-200">
-              <span>Consultar disponibilidad</span>
+              <span>Ver detalles</span>
               <svg class="w-3.5 h-3.5 transition-transform duration-200 group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6" />
               </svg>
             </div>
           </div>
-        </div>
+        </NuxtLink>
       </div>
 
       <!-- Bottom CTA -->
@@ -85,33 +81,22 @@ import { ref, onMounted } from 'vue'
 
 const sectionEl = ref<HTMLElement | null>(null)
 const headerEl = ref<HTMLElement | null>(null)
-const cardEls = ref<HTMLElement[]>([])
 const ctaEl = ref<HTMLElement | null>(null)
 
 const products = [
-  { name: 'Autoadhesivos / In-mold', image: '/images/Adhesivos-Autoadheribles.png' },
-  { name: 'Laminación BOPP / PET', image: '/images/Laminacion.png' },
-  { name: 'Termoencogibles', image: '/images/Termoencogibles.png' },
-  { name: 'Wrap Around – Empaque Flexible', image: '/images/Empaque-flexible.png' },
-  { name: 'Polyboard – Papeles y Cartones', image: '/images/Polyboard-papeles-cartones.png' },
-  { name: 'Cintas de Transferencia Térmica', image: '/images/cintas-trasnferencia-termica.png' },
-  { name: 'Maquinaria', image: '/images/maquinaria.png' },
-  { name: 'Accesorios', image: '/images/accesorios.png' },
+  { slug: 'autoadhesivos-in-mold', name: 'Autoadhesivos / In-mold', image: '/images/Adhesivos-Autoadheribles.png' },
+  { slug: 'laminacion-bopp-pet', name: 'Laminación BOPP / PET', image: '/images/Laminacion.png' },
+  { slug: 'termoencogibles', name: 'Termoencogibles', image: '/images/Termoencogibles.png' },
+  { slug: 'wrap-around-empaque-flexible', name: 'Wrap Around – Empaque Flexible', image: '/images/Empaque-flexible.png' },
+  { slug: 'polyboard-papeles-y-cartones', name: 'Polyboard – Papeles y Cartones', image: '/images/Polyboard-papeles-cartones.png' },
+  { slug: 'cintas-de-transferencia-termica', name: 'Cintas de Transferencia Térmica', image: '/images/cintas-trasnferencia-termica.png' },
+  { slug: 'maquinaria', name: 'Maquinaria', image: '/images/maquinaria.png' },
+  { slug: 'accesorios', name: 'Accesorios', image: '/images/accesorios.png' },
 ]
 
 function scrollToContact() {
   const el = document.getElementById('contacto')
   if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
-
-function inquireProduct(name: string) {
-  // Pre-fill contact form with product name
-  const contactEl = document.getElementById('contacto')
-  if (contactEl) {
-    contactEl.scrollIntoView({ behavior: 'smooth' })
-    // Dispatch event to pre-fill product field
-    window.dispatchEvent(new CustomEvent('product-selected', { detail: name }))
-  }
 }
 
 onMounted(async () => {

@@ -49,14 +49,13 @@
           <h4 class="font-display text-sm font-bold text-ice tracking-wider uppercase mb-5">Navegación</h4>
           <ul class="space-y-3">
             <li v-for="link in navLinks" :key="link.label">
-              <a
-                :href="link.href"
+              <NuxtLink
+                :to="link.href"
                 class="text-sm text-ice/50 hover:text-cyan transition-colors duration-200 flex items-center gap-2 group"
-                @click.prevent="scrollTo(link.id)"
               >
                 <span class="w-1 h-1 rounded-full bg-cyan/30 group-hover:bg-cyan transition-colors duration-200"></span>
                 {{ link.label }}
-              </a>
+              </NuxtLink>
             </li>
           </ul>
         </div>
@@ -65,15 +64,14 @@
         <div>
           <h4 class="font-display text-sm font-bold text-ice tracking-wider uppercase mb-5">Productos</h4>
           <ul class="space-y-3">
-            <li v-for="product in productLinks" :key="product">
-              <a
-                href="#productos"
+            <li v-for="product in productLinks" :key="product.slug">
+              <NuxtLink
+                :to="`/productos/${product.slug}`"
                 class="text-sm text-ice/50 hover:text-cyan transition-colors duration-200 flex items-center gap-2 group leading-snug"
-                @click.prevent="scrollTo('productos')"
               >
                 <span class="w-1 h-1 rounded-full bg-cyan/30 group-hover:bg-cyan transition-colors duration-200 flex-shrink-0"></span>
-                {{ product }}
-              </a>
+                {{ product.name }}
+              </NuxtLink>
             </li>
           </ul>
         </div>
@@ -148,30 +146,25 @@ import { ref } from 'vue'
 const newsletterEmail = ref('')
 
 const navLinks = [
-  { label: 'Inicio', href: '#inicio', id: 'inicio' },
-  { label: 'Productos', href: '#productos', id: 'productos' },
-  { label: 'Representaciones', href: '#representaciones', id: 'representaciones' },
-  { label: 'Cobertura', href: '#cobertura', id: 'cobertura' },
-  { label: 'Nosotros', href: '#nosotros', id: 'nosotros' },
-  { label: 'Noticias', href: '#noticias', id: 'noticias' },
-  { label: 'Contacto', href: '#contacto', id: 'contacto' },
+  { label: 'Inicio', href: '/' },
+  { label: 'Productos', href: '/productos' },
+  { label: 'Representaciones', href: '/#representaciones' },
+  { label: 'Cobertura', href: '/#cobertura' },
+  { label: 'Nosotros', href: '/#nosotros' },
+  { label: 'Noticias', href: '/#noticias' },
+  { label: 'Contacto', href: '/#contacto' },
 ]
 
 const productLinks = [
-  'Autoadhesivos / In-mold',
-  'Laminación BOPP / PET',
-  'Termoencogibles',
-  'Wrap Around – Empaque Flexible',
-  'Polyboard – Papeles y Cartones',
-  'Cintas de Transferencia Térmica',
-  'Maquinaria',
-  'Accesorios',
+  { name: 'Autoadhesivos / In-mold', slug: 'autoadhesivos-in-mold' },
+  { name: 'Laminación BOPP / PET', slug: 'laminacion-bopp-pet' },
+  { name: 'Termoencogibles', slug: 'termoencogibles' },
+  { name: 'Wrap Around – Empaque Flexible', slug: 'wrap-around-empaque-flexible' },
+  { name: 'Polyboard – Papeles y Cartones', slug: 'polyboard-papeles-y-cartones' },
+  { name: 'Cintas de Transferencia Térmica', slug: 'cintas-de-transferencia-termica' },
+  { name: 'Maquinaria', slug: 'maquinaria' },
+  { name: 'Accesorios', slug: 'accesorios' },
 ]
-
-function scrollTo(id: string) {
-  const el = document.getElementById(id)
-  if (el) el.scrollIntoView({ behavior: 'smooth' })
-}
 
 function subscribeNewsletter() {
   newsletterEmail.value = ''

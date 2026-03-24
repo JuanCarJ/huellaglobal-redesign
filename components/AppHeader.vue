@@ -7,14 +7,14 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <nav class="flex items-center justify-between h-18 md:h-20">
         <!-- Logo -->
-        <a href="#inicio" @click.prevent="scrollTo('inicio')" class="flex-shrink-0 z-10">
+        <NuxtLink to="/" class="flex-shrink-0 z-10">
           <img
             src="/images/Huella-Global-Webh.png"
             alt="Huella Global Corporation"
             class="h-10 md:h-12 w-auto transition-all duration-300"
             :class="scrolled ? 'brightness-100' : 'brightness-0 invert'"
           />
-        </a>
+        </NuxtLink>
 
         <!-- Desktop Nav -->
         <ul class="hidden lg:flex items-center gap-8">
@@ -186,6 +186,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
+const route = useRoute()
+const router = useRouter()
 
 const headerEl = ref<HTMLElement | null>(null)
 const scrolled = ref(false)
@@ -239,9 +241,16 @@ function toggleLang() {
 function scrollTo(id: string) {
   mobileMenuOpen.value = false
   megaMenuOpen.value = false
-  const el = document.getElementById(id)
-  if (el) {
-    el.scrollIntoView({ behavior: 'smooth' })
+
+  // If we're on the home page, scroll to the section
+  if (route.path === '/') {
+    const el = document.getElementById(id)
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' })
+    }
+  } else {
+    // Navigate to home page with hash
+    router.push('/#' + id)
   }
 }
 

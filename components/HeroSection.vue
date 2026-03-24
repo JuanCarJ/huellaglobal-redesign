@@ -4,8 +4,22 @@
     ref="heroEl"
     class="relative min-h-screen flex items-center overflow-hidden bg-navy"
   >
+    <!-- Background photo (subtle) -->
+    <div class="absolute inset-0 z-0" aria-hidden="true">
+      <img
+        src="/images/valor-agregado-grupo-huella-digital-productos-para-flexografia.png"
+        alt=""
+        class="w-full h-full object-cover"
+        loading="eager"
+      />
+      <!-- Dark overlay -->
+      <div class="absolute inset-0 bg-navy/[0.72]"></div>
+      <!-- Gradient fade — darker at top (header legibility) and bottom (transition) -->
+      <div class="absolute inset-0 bg-gradient-to-b from-navy/40 via-transparent to-navy/80"></div>
+    </div>
+
     <!-- Animated mesh gradient background -->
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0 pointer-events-none z-[1]" aria-hidden="true">
       <div
         ref="meshEl"
         class="absolute inset-0"
@@ -196,10 +210,8 @@ const grad2Y = ref(60)
 
 const meshStyle = computed(() => ({
   background: `
-    radial-gradient(ellipse at ${grad1X.value}% ${grad1Y.value}%, rgba(0, 102, 162, 0.35) 0%, transparent 55%),
-    radial-gradient(ellipse at ${grad2X.value}% ${grad2Y.value}%, rgba(0, 184, 212, 0.18) 0%, transparent 45%),
-    radial-gradient(ellipse at 50% 100%, rgba(19, 47, 76, 0.6) 0%, transparent 60%),
-    #071B2F
+    radial-gradient(ellipse at ${grad1X.value}% ${grad1Y.value}%, rgba(0, 102, 162, 0.2) 0%, transparent 55%),
+    radial-gradient(ellipse at ${grad2X.value}% ${grad2Y.value}%, rgba(0, 184, 212, 0.12) 0%, transparent 45%)
   `,
 }))
 
@@ -274,8 +286,8 @@ onMounted(async () => {
 <style scoped>
 .hero-grid-overlay {
   background-image:
-    linear-gradient(rgba(0, 184, 212, 0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0, 184, 212, 0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 184, 212, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 184, 212, 0.015) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 

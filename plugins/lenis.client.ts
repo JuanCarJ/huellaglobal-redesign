@@ -13,13 +13,14 @@ export default defineNuxtPlugin((nuxtApp) => {
   }
 
   const lenis = new Lenis({
-    duration: 1.2,
-    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    duration: 0.8,
+    easing: (t: number) => 1 - Math.pow(1 - t, 3),
     orientation: 'vertical',
     gestureOrientation: 'vertical',
     smoothWheel: true,
-    wheelMultiplier: 1,
-    touchMultiplier: 2,
+    wheelMultiplier: 1.2,
+    touchMultiplier: 1.5,
+    infinite: false,
   })
 
   // Sync Lenis with GSAP's ticker for ScrollTrigger compatibility
@@ -27,12 +28,18 @@ export default defineNuxtPlugin((nuxtApp) => {
     lenis.raf(time * 1000)
   })
 
-  // Keep ScrollTrigger in sync
+  // Keep ScrollTrigger in sync — throttled to avoid lag
+  let scrollTicking = false
   lenis.on('scroll', () => {
-    ScrollTrigger.update()
+    if (!scrollTicking) {
+      scrollTicking = true
+      requestAnimationFrame(() => {
+        ScrollTrigger.update()
+        scrollTicking = false
+      })
+    }
   })
 
-  // Disable GSAP's default lagSmoothing when Lenis is active
   gsap.ticker.lagSmoothing(0)
 
   nuxtApp.provide('lenis', lenis)

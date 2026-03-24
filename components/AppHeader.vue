@@ -11,7 +11,7 @@
           <img
             src="/images/Huella-Global-Webh.png"
             alt="Huella Global Corporation"
-            class="h-10 md:h-12 w-auto transition-all duration-300"
+            class="h-14 md:h-16 w-auto transition-all duration-300"
             :class="scrolled ? 'brightness-100' : 'brightness-0 invert'"
           />
         </NuxtLink>

@@ -247,7 +247,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, nextTick } from 'vue'
 import { productCategories, getCategoryBySlug } from '~/data/products'
 
 const route = useRoute()
@@ -297,11 +297,16 @@ onMounted(async () => {
   const { ScrollTrigger } = await import('gsap/ScrollTrigger')
   gsap.registerPlugin(ScrollTrigger)
 
+  // Scroll to top on page load
+  window.scrollTo(0, 0)
+
+  // Wait for Vue to fully render DOM
+  await nextTick()
+
   // Hero content reveal
   if (heroContentEl.value) {
     gsap.from(heroContentEl.value.children, {
       autoAlpha: 0,
-      immediateRender: false,
       y: 32,
       duration: 0.9,
       ease: 'power3.out',

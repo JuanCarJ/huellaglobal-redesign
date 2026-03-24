@@ -1,0 +1,284 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Base Resets ─────────────────────────────────────── */
+@layer base {
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    font-family: 'IBM Plex Sans', sans-serif;
+    scroll-behavior: auto; /* Lenis controls this */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: #071B2F;
+    color: #EAF6F9;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  ::selection {
+    background-color: #00B8D4;
+    color: #071B2F;
+  }
+}
+
+/* ─── Component Layer ─────────────────────────────────── */
+@layer components {
+  /* Section Tag / Label chip */
+  .section-tag {
+    @apply inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-semibold tracking-widest uppercase;
+    background: rgba(0, 184, 212, 0.12);
+    border: 1px solid rgba(0, 184, 212, 0.35);
+    color: #00B8D4;
+    letter-spacing: 0.12em;
+  }
+
+  /* Section heading */
+  .section-heading {
+    @apply font-display text-4xl md:text-5xl font-bold leading-tight;
+  }
+
+  /* Glass card */
+  .glass-card {
+    background: rgba(14, 42, 69, 0.55);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(0, 184, 212, 0.2);
+    border-radius: 1rem;
+  }
+
+  /* Cyan underline accent */
+  .cyan-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .cyan-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, #00B8D4, #00E5FF);
+    border-radius: 2px;
+  }
+
+  /* Double-underline nav link */
+  .nav-link {
+    @apply relative text-sm font-medium tracking-wide py-1 transition-colors duration-200;
+  }
+  .nav-link::before,
+  .nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #00B8D4;
+    transition: width 0.3s ease;
+  }
+  .nav-link::before {
+    bottom: -4px;
+    background: rgba(0, 184, 212, 0.35);
+  }
+  .nav-link:hover::before,
+  .nav-link:hover::after {
+    width: 100%;
+  }
+
+  /* CTA button primary */
+  .btn-primary {
+    @apply relative overflow-hidden inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300;
+    background: linear-gradient(135deg, #0066A2, #00B8D4);
+    color: #fff;
+    box-shadow: 0 4px 20px rgba(0, 184, 212, 0.3);
+  }
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+    transform: skewX(-12deg);
+    transition: none;
+  }
+  .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 30px rgba(0, 184, 212, 0.5);
+  }
+  .btn-primary:hover::after {
+    animation: shimmer 0.7s forwards;
+  }
+
+  /* CTA button outline */
+  .btn-outline {
+    @apply relative inline-flex items-center gap-2 px-6 py-3 rounded-full font-semibold text-sm tracking-wide transition-all duration-300;
+    border: 1.5px solid rgba(0, 184, 212, 0.6);
+    color: #00B8D4;
+    background: transparent;
+  }
+  .btn-outline:hover {
+    background: rgba(0, 184, 212, 0.1);
+    border-color: #00B8D4;
+    transform: translateY(-1px);
+  }
+
+  /* Product card */
+  .product-card {
+    @apply relative overflow-hidden rounded-2xl cursor-pointer transition-all duration-300;
+    background: rgba(14, 42, 69, 0.6);
+    border: 1px solid rgba(0, 184, 212, 0.12);
+  }
+  .product-card:hover {
+    border-color: rgba(0, 184, 212, 0.5);
+    box-shadow: 0 0 40px rgba(0, 184, 212, 0.2), 0 8px 30px rgba(7, 27, 47, 0.4);
+    transform: translateY(-4px);
+  }
+  .product-card:hover .product-img {
+    transform: scale(1.07);
+  }
+
+  /* Form input */
+  .form-input {
+    @apply w-full px-4 py-3 rounded-xl text-sm font-body outline-none transition-all duration-200;
+    background: rgba(14, 42, 69, 0.7);
+    border: 1px solid rgba(0, 184, 212, 0.2);
+    color: #EAF6F9;
+  }
+  .form-input::placeholder {
+    color: rgba(234, 246, 249, 0.4);
+  }
+  .form-input:focus {
+    border-color: #00B8D4;
+    box-shadow: 0 0 0 3px rgba(0, 184, 212, 0.15);
+  }
+}
+
+/* ─── Utilities Layer ─────────────────────────────────── */
+@layer utilities {
+  .text-gradient-cyan {
+    background: linear-gradient(135deg, #00B8D4, #00E5FF);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .bg-mesh-dark {
+    background-color: #071B2F;
+    background-image:
+      radial-gradient(ellipse at 20% 20%, rgba(0, 102, 162, 0.25) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 60%, rgba(0, 184, 212, 0.12) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 90%, rgba(19, 47, 76, 0.8) 0%, transparent 60%);
+  }
+
+  .bg-mesh-light {
+    background-color: #F2F7F9;
+    background-image:
+      radial-gradient(ellipse at 10% 50%, rgba(0, 102, 162, 0.06) 0%, transparent 60%),
+      radial-gradient(ellipse at 90% 20%, rgba(0, 184, 212, 0.06) 0%, transparent 50%);
+  }
+
+  /* Fingerprint SVG decorative */
+  .fp-deco {
+    opacity: 0.04;
+    filter: blur(0.5px);
+  }
+
+  /* Grayscale partner logo */
+  .partner-logo {
+    filter: grayscale(100%) brightness(0.7);
+    transition: filter 0.3s ease, opacity 0.3s ease;
+    opacity: 0.65;
+  }
+  .partner-logo:hover {
+    filter: grayscale(0%) brightness(1);
+    opacity: 1;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #071B2F;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #0066A2;
+    border-radius: 3px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00B8D4;
+  }
+}
+
+/* ─── Keyframes ──────────────────────────────────────── */
+@keyframes shimmer {
+  0% { left: -100%; }
+  100% { left: 160%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes partnerScroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes dotPulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(2); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 0 0 14px rgba(37, 211, 102, 0); }
+}
+
+/* ─── Reduced Motion ──────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Custom scrollbar for Firefox ───────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0066A2 #071B2F;
+}
